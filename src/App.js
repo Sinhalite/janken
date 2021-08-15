@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import './App.css';
 
+const API_URL = 'https://623c7v9nm9.execute-api.ap-northeast-1.amazonaws.com/v1'
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -15,10 +17,6 @@ class App extends Component {
     this.onClick = this.onClick.bind(this);
   }
 
-  componentDidMount() {
-
-  }
-
   onSubmit(e) {
     e.preventDefault();
 
@@ -30,7 +28,7 @@ class App extends Component {
     this.setState({ error: null })
     this.setState({ isSubmitted: true })
 
-    axios.post("https://623c7v9nm9.execute-api.ap-northeast-1.amazonaws.com/v1", {
+    axios.post(API_URL, {
       hand: this.state.player_hand
     }).then(res => {
       this.setState({ results: res.data.body })
@@ -39,9 +37,13 @@ class App extends Component {
 
   onClick(e, value) {
     this.setState({ player_hand: value })
-    Array.prototype.slice.call(document.getElementsByClassName("active")).forEach(function (node) {
-      node.classList.remove("active")
-    });
+    Array.prototype.slice.call(
+      document.getElementsByClassName("active")
+    ).forEach(
+      function (node) {
+        node.classList.remove("active")
+      }
+    );
     e.currentTarget.classList.add("active")
   }
 
